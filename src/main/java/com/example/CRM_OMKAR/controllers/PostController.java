@@ -58,6 +58,11 @@ public class PostController {
         this.postService.deletePost(postId);
         return new ApiResponse("Post is successfully deleted",true);
     }
-
+    @PutMapping("/posts/{postId}")
+    public ResponseEntity<PostDto> updatePost(@RequestBody PostDto postDto, @PathVariable Integer postId)
+    {
+        PostDto updatePost = this.postService.updatePost(postDto,postId);
+        return new ResponseEntity<PostDto>(updatePost,HttpStatus.OK);
+    }
 
 }
