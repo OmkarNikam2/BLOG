@@ -6,8 +6,6 @@ import com.example.CRM_OMKAR.payloads.PostDto;
 import com.example.CRM_OMKAR.payloads.PostResponse;
 import com.example.CRM_OMKAR.services.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -70,6 +68,12 @@ public class PostController {
     {
         PostDto updatePost = this.postService.updatePost(postDto,postId);
         return new ResponseEntity<PostDto>(updatePost,HttpStatus.OK);
+    }
+    @GetMapping("/posts/search/{keywords}")
+    public ResponseEntity<List<PostDto>> searchPostByTitle(@PathVariable("keywords") String keywords)
+    {
+        List<PostDto> result=this.postService.searchPosts(keywords);
+        return new ResponseEntity<List<PostDto>>(result,HttpStatus.OK);
     }
 
 }

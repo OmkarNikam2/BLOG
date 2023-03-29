@@ -122,12 +122,16 @@ public class PostServiceImpl implements PostService {
                 .orElseThrow(()->new ResourceNotFoundException("User","user id",userId));
         List<Post> posts=this.postRepo.findByUser(user);
 
-        List<PostDto> postDtos=posts.stream().map((post) -> this.modelMapper.map(post, PostDto.class)).collect(Collectors.toList());
+        List<PostDto> postDtos=posts.stream().map((post) -> this.modelMapper.map(post, PostDto.class))
+                .collect(Collectors.toList());
         return postDtos;
     }
 
     @Override
     public List<PostDto> searchPosts(String keyword) {
-        return null;
+        List<Post> posts=this.postRepo.findByTitleContaining(keyword);
+        List<PostDto> postDto =posts.stream().map((post)->this.modelMapper.map(post,PostDto.class))
+                .collect(Collectors.toList());
+        return postDto;
     }
 }

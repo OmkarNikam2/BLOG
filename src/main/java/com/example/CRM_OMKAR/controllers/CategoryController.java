@@ -2,6 +2,7 @@ package com.example.CRM_OMKAR.controllers;
 
 import com.example.CRM_OMKAR.payloads.ApiResponse;
 import com.example.CRM_OMKAR.payloads.CategoryDto;
+import com.example.CRM_OMKAR.payloads.PostDto;
 import com.example.CRM_OMKAR.services.CategoryService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,7 +48,5 @@ public class CategoryController {
        List<CategoryDto> categories= this.categoryService.getCategories();
        return ResponseEntity.ok(categories);
     }
-
-
 
 }
