@@ -3,6 +3,7 @@ package com.example.CRM_OMKAR.controllers;
 
 import com.example.CRM_OMKAR.payloads.ApiResponse;
 import com.example.CRM_OMKAR.payloads.PostDto;
+import com.example.CRM_OMKAR.payloads.PostResponse;
 import com.example.CRM_OMKAR.services.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
@@ -42,12 +43,12 @@ public class PostController {
     }
 
     @GetMapping("/posts")
-    public ResponseEntity<List<PostDto>> getAllPosts(@RequestParam(value = "pageNumber",defaultValue = "1",required = false) Integer pageNumber,
-                                                     @RequestParam(value = "pageSize",defaultValue = "5",required = false) Integer pageSize)
+    public ResponseEntity<PostResponse> getAllPosts(@RequestParam(value = "pageNumber",defaultValue = "1",required = false) Integer pageNumber,
+                                                    @RequestParam(value = "pageSize",defaultValue = "5",required = false) Integer pageSize)
     {
         //pageSize = records,pageNumber = page number
-        List<PostDto> posts=this.postService.getAllPost(pageNumber,pageSize);
-        return new ResponseEntity<List<PostDto>>(posts,HttpStatus.OK);
+        PostResponse posts=this.postService.getAllPost(pageNumber,pageSize);
+        return new ResponseEntity<PostResponse>(posts,HttpStatus.OK);
     }
 
     @GetMapping("/posts/{postId}")

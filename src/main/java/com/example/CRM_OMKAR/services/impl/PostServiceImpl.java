@@ -5,6 +5,7 @@ import com.example.CRM_OMKAR.entities.Post;
 import com.example.CRM_OMKAR.entities.User;
 import com.example.CRM_OMKAR.exceptions.ResourceNotFoundException;
 import com.example.CRM_OMKAR.payloads.PostDto;
+import com.example.CRM_OMKAR.payloads.PostResponse;
 import com.example.CRM_OMKAR.repositories.CategoryRepo;
 import com.example.CRM_OMKAR.repositories.PostRepo;
 import com.example.CRM_OMKAR.repositories.UserRepo;
@@ -73,7 +74,7 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public List<PostDto> getAllPost(Integer pageNumber,Integer pageSize) {
+    public PostResponse getAllPost(Integer pageNumber, Integer pageSize) {
         // Adding Pagination
 
         Pageable p= PageRequest.of(pageSize,pageNumber);
@@ -84,7 +85,16 @@ public class PostServiceImpl implements PostService {
 
         List<PostDto> postDtos=allPosts.stream().map((post) ->this.modelMapper.map(post,PostDto.class))
                 .collect(Collectors.toList());
-        return postDtos;
+
+        PostResponse postResponse=new PostResponse();
+        postResponse.setContent(postDtos);
+        postResponse.setPageNumber(pagePost.getNumber());
+        postResponse.setPageSize(pagePost.getSize());
+        postResponse.setTotalElements(pagePost.getTotalElements());
+        postResponse.setTotalPages(pagePost.getTotalPages());
+        postResponse.setLastPage(pagePost.isLast());
+
+        return postResponse;
     }
 
     @Override
